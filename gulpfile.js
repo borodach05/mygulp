@@ -15,7 +15,8 @@
 	    browserSync = require("browser-sync"),
 	    reload = browserSync.reload,
 	    smartgrid = require('smart-grid'),
-	    cache = require('gulp-cache');
+	    cache = require('gulp-cache'),
+        rename = require('gulp-rename');
 
 // smartgrid
 
@@ -156,7 +157,12 @@ gulp.task('less:build', function (done) {
         // .pipe(cleanCSS()) //Сожмем
         // .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.dist.less)) //И в build
-        .pipe(gulp.dest('app/css/css')) 
+        .pipe(cleanCSS())
+        .pipe(rename({
+            basename: 'main',
+            prefix: 'min-'
+        }))
+        .pipe(gulp.dest(path.dist.less))
         .pipe(browserSync.reload({ stream: true }));
         done();
 });
@@ -180,7 +186,7 @@ gulp.task('image:build', function (done) {
             interlaced: true
         })))
         .pipe(gulp.dest(path.dist.img)) //И бросим в build
-        .pipe(reload({stream: true}));
+        .pipe(browserSync.reload({stream: true}));
         done();
 });
 

@@ -11,6 +11,7 @@
     "gulp-clean-css": "latest",
     "gulp-imagemin": "latest",
     "gulp-less": "latest",
+    "gulp-rename": "latest",
     "gulp-sourcemaps": "latest",
     "gulp-uglify": "latest",
     "gulp-watch": "latest",
