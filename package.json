@@ -1,0 +1,28 @@
+{
+  "name": "main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "browser-sync": "latest",
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-cache": "latest",
+    "gulp-clean-css": "latest",
+    "gulp-imagemin": "latest",
+    "gulp-less": "latest",
+    "gulp-sourcemaps": "latest",
+    "gulp-uglify": "latest",
+    "gulp-watch": "latest",
+    "imagemin-pngquant": "latest",
+    "main-bower-files": "latest",
+    "rimraf": "latest",
+    "smart-grid": "latest"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
