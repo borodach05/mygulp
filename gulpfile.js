@@ -16,7 +16,8 @@
 	    reload = browserSync.reload,
 	    smartgrid = require('smart-grid'),
 	    cache = require('gulp-cache'),
-        rename = require('gulp-rename');
+        rename = require('gulp-rename'),
+        group = require('gulp-group-css-media-queries');
 
 // smartgrid
 
@@ -154,10 +155,13 @@ gulp.task('less:build', function (done) {
         // .pipe(sourcemaps.init()) //То же самое что и с js
         .pipe(less()) //Скомпилируем
         .pipe(prefixer()) //Добавим вендорные префиксы
+        .pipe(group())  // Сгрупируем наши Media
         // .pipe(cleanCSS()) //Сожмем
         // .pipe(sourcemaps.write())
         .pipe(gulp.dest(path.dist.less)) //И в build
-        .pipe(cleanCSS())
+        .pipe(cleanCSS({
+        	level: 2
+        }))
         .pipe(rename({
             basename: 'main',
             prefix: 'min-'
@@ -167,15 +171,6 @@ gulp.task('less:build', function (done) {
         done();
 });
 
-gulp.task('css:build', function (done) {
-    return gulp.src(path.app.css) //Выберем наш main.css
-        // .pipe(sourcemaps.init()) //То же самое что и с js
-        // .pipe(cleanCSS()) //Сожмем
-        // .pipe(sourcemaps.write('./'))
-        .pipe(gulp.dest(path.dist.less)) //И в build
-        .pipe(browserSync.reload({ stream: true }));
-        done();
-});
 
 gulp.task('image:build', function (done) {
     gulp.src(path.app.img) //Выберем наши картинки
@@ -206,7 +201,6 @@ gulp.task('build', gulp.parallel(
     'html:build',
     'js:build',
     'less:build',
-    'css:build',
     'fonts:build',
     'image:build'
 ));
@@ -215,7 +209,6 @@ gulp.task('build', gulp.parallel(
 gulp.task('watch', function(){
     gulp.watch(path.watch.html, gulp.series('html:build'));
     gulp.watch(path.watch.less, gulp.series('less:build'));
-    gulp.watch(path.watch.css, gulp.series('css:build'));
     gulp.watch(path.watch.js, gulp.series('js:build'));
     gulp.watch(path.watch.img, gulp.series('image:build'));
     gulp.watch(path.watch.fonts, gulp.series('fonts:build'));
@@ -228,5 +221,5 @@ gulp.task('clean', function (cb) {
 });
 
 
-gulp.task('default', gulp.series('clean', 'build', 'webserver', 'watch'));
+gulp.task('default', gulp.series('build', 'webserver', 'watch'));
 
